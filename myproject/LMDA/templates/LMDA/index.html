@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Locomotive maintenance depot application</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        h1 { color: blue; }
+        h2 { font-weight: bold; }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+        th, td {
+            padding: 8px;
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+        .student-info {
+            font-style: italic;
+            color: green;
+        }
+    </style>
+</head>
+<body>
+    <h1>Locomotive maintenance depot application</h1>
+    <div class="student-info">Кочубей Богдан Богданович, КН-20002б</div>
+
+    <h2>Локомотиви</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Реєстраційний номер</th>
+                <th>Депо</th>
+                <th>Тип</th>
+                <th>Рік виробництва</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for locomotive in locomotives %}
+            <tr>
+                <td>{{ locomotive.id }}</td>
+                <td>{{ locomotive.registration_number }}</td>
+                <td>{{ locomotive.depot }}</td>
+                <td>{{ locomotive.get_locomotive_type_display }}</td>
+                <td>{{ locomotive.year_of_production }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Бригади</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>Номер бригади</th>
+                <th>Телефон</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for brigade in brigades %}
+            <tr>
+                <td>{{ brigade.brigade_number }}</td>
+                <td>{{ brigade.phone }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Ремонти</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Локомотив</th>
+                <th>Тип ремонту</th>
+                <th>Дата початку</th>
+                <th>Необхідно днів</th>
+                <th>Вартість ремонту за день</th>
+                <th>Бригада</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for repair in repairs %}
+            <tr>
+                <td>{{ repair.id }}</td>
+                <td>{{ repair.locomotive.registration_number }}</td>
+                <td>{{ repair.get_repair_type_display }}</td>
+                <td>{{ repair.start_date }}</td>
+                <td>{{ repair.days_required }}</td>
+                <td>{{ repair.daily_repair_cost }}</td>
+                <td>{{ repair.brigade.brigade_number }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h2>Працівники</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Прізвище</th>
+                <th>Ім'я</th>
+                <th>По батькові</th>
+                <th>Бригада</th>
+                <th>Чи є бригадиром</th>
+                <th>Дата народження</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for worker in workers %}
+            <tr>
+                <td>{{ worker.id }}</td>
+                <td>{{ worker.last_name }}</td>
+                <td>{{ worker.first_name }}</td>
+                <td>{{ worker.middle_name }}</td>
+                <td>{{ worker.brigade.brigade_number }}</td>
+                <td>{{ worker.is_brigade_leader }}</td>
+                <td>{{ worker.birth_date }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
